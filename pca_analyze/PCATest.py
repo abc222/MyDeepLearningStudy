@@ -10,9 +10,9 @@ def meanX(dataX):
 
 # 计算方差,传入的是一个numpy的矩阵格式，行表示样本数，列表示特征
 def variance(X):
-    m, n = np.shape(X)
-    mu = meanX(X)
-    muAll = np.tile(mu, (m, 1))
+    m, n = np.shape(X)  # 返回对象的形状
+    mu = meanX(X)  # 求每一列的均值
+    muAll = np.tile(mu, (m, 1))  # 广播 参数1：输入数组，参数2：输入数组在每个轴上重复的次数。
     X1 = X - muAll
     variance = 1. / m * np.diag(X1.T * X1)
     return variance
@@ -31,11 +31,11 @@ def normalize(X):
 
 """
 参数：
-	- XMat：传入的是一个numpy的矩阵格式，行表示样本数，列表示特征    
-	- k：表示取前k个特征值对应的特征向量
+    - XMat：传入的是一个numpy的矩阵格式，行表示样本数，列表示特征    
+    - k：表示取前k个特征值对应的特征向量
 返回值：
-	- finalData：参数一指的是返回的低维矩阵，对应于输入参数二
-	- reconData：参数二对应的是移动坐标轴后的矩阵
+    - finalData：参数一指的是返回的低维矩阵，对应于输入参数二
+    - reconData：参数二对应的是移动坐标轴后的矩阵
 """
 
 
@@ -54,7 +54,7 @@ def pca(XMat, k):
         "k must lower than feature number"
         return
     else:
-        # 注意特征向量时列向量，而numpy的二维矩阵(数组)a[m][n]中，a[1]表示第1行值
+        # 注意特征向量是列向量，而numpy的二维矩阵(数组)a[m][n]中，a[1]表示第1行值
         selectVec = np.matrix(featVec.T[index[:k]])  # 所以这里需要进行转置
         finalData = data_adjust * selectVec.T
         reconData = (finalData * selectVec) + average
@@ -80,8 +80,8 @@ def plotBestFit(data1, data2):
         axis_x2.append(dataArr2[i, 0])
         axis_y2.append(dataArr2[i, 1])
     fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.scatter(axis_x1, axis_y1, s=50, c='red', marker='s')
+    ax = fig.add_subplot(111)  # 建立 subplot 网格，subplot() 函数允许你在同一图中绘制不同的东西
+    ax.scatter(axis_x1, axis_y1, s=20, c='red', marker='s')
     ax.scatter(axis_x2, axis_y2, s=50, c='blue')
     plt.xlabel('x1');
     plt.ylabel('x2');
@@ -90,7 +90,6 @@ def plotBestFit(data1, data2):
 
 
 # 简单测试
-# 数据来源：http://www.cnblogs.com/jerrylead/archive/2011/04/18/2020209.html
 def test():
     X = [[2.5, 0.5, 2.2, 1.9, 3.1, 2.3, 2, 1, 1.5, 1.1],
          [2.4, 0.7, 2.9, 2.2, 3.0, 2.7, 1.6, 1.1, 1.6, 0.9]]
@@ -101,7 +100,7 @@ def test():
 
 # 根据数据集data.txt
 def main():
-    datafile = "./pca_analyze/data.txt"
+    datafile = "data.txt"
     XMat = loaddata(datafile)
     k = 2
     return pca(XMat, k)
