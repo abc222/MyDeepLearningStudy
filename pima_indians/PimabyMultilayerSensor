@@ -10,7 +10,7 @@ dataset = np.loadtxt('pima-indians-diabetes.csv', delimiter=',')
 x = dataset[:, 0 : 8]
 Y = dataset[:, 8]
 
-# 创建模型
+# 创建模
 model = Sequential()
 model.add(Dense(12, input_dim=8, activation='relu'))
 model.add(Dense(8, activation='relu'))
